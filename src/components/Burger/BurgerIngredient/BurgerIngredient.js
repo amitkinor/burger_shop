@@ -13,9 +13,9 @@ function BurgerIngredient(props) {
     case ('bread-bottom'):
       ingredient = <div className={styles.BreadBottom}></div>;
       break;
-    case ('top-bread'):
+    case ('bread-top'):
       ingredient = (
-        <div className={styles.BreadBottom}>
+        <div className={styles.BreadTop}>
           <div className={styles.Seeds1}></div>
           <div className={styles.Seeds2}></div>
         </div>
@@ -24,13 +24,13 @@ function BurgerIngredient(props) {
     case('meat'):
         ingredient = <div className={styles.Meat}></div>;
       break;
-    case('Cheese'):
+    case('cheese'):
       ingredient = <div className={styles.Cheese}></div>;
       break;
-    case('Salad'):
+    case('salad'):
         ingredient = <div className={styles.Salad}></div>;
       break;
-    case('Bacon'):
+    case('bacon'):
         ingredient = <div className={styles.Bacon}></div>;
       break;
 
@@ -46,5 +46,5 @@ BurgerIngredient.propTypes = {
   type: PropTypes.string.isRequired
 }
 
-export default BurgerIngredient
+export default BurgerIngredient;
 
