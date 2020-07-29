@@ -24,9 +24,5 @@ module.exports = {
     'react/forbid-prop-types': [0, { forbid: ['any'] }],
     'react/prop-types': 0,
   },
-  env: {
-    jest: true,
-    browser: true,
-    node: true,
-  },
+  
 };

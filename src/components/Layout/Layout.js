@@ -1,23 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import classes from './Layout.module.css'
+import React from 'react';
+import PropTypes from 'prop-types';
+import classes from './Layout.module.css';
+import Toolbar from '../Navigation/Toolbal/Toolbar';
 
-function Layout(props) {
+export default function Layout(props) {
   return (
-    <React.Fragment>
-      <div>
-         Toolbar, SideDrawer Backdrop
-      </div>
-      <main className={classes.Content}>
-        {props.children}
-      </main>
-    </React.Fragment>
-  )
+    <>
+      <Toolbar />
+      <main className={classes.Content}>{props.children}</main>
+    </>
+  );
 }
-
-Layout.propTypes = {
-
-}
-
-export default Layout
-
