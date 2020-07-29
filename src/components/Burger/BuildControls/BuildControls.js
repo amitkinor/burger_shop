@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import BuildControl from './BuildControl/BuildControl'
-import styles from './BuildControls.module.css';
+import classes from './BuildControls.module.css';
 
 const controls = [
   {label: 'Salad', type:'salad'},
-  {label: 'Cheese', type:'cheese'},
   {label: 'Bacon', type:'bacon'},
+  {label: 'Cheese', type:'cheese'},
   {label: 'Meat', type:'meat'},
 ];
 
@@ -15,7 +15,8 @@ const controls = [
 
 function BuildControls(props) {
   return (
-    <div className={styles.BuildControls}>
+    <div className={classes.BuildControls}>
+      <p className={classes.Price}>Current Price: {props.price.toFixed(2)}</p>
       {controls.map(ing => (
         <BuildControl
            ingAdded = { () => props.ingredientAdded(ing.type) }
@@ -25,6 +26,10 @@ function BuildControls(props) {
            disabled = {props.disabledInfo[ing.type]}
            />
        ))}
+       <button
+         className={classes.OrderButton}
+         disabled={!props.purchasable}
+         onClick={props.ordered}>Order Now</button>
     </div>
   )
 }
@@ -32,7 +37,9 @@ function BuildControls(props) {
 BuildControls.propTypes = {
   ingredientAdded: PropTypes.func.isRequired,
   ingredientRemoved: PropTypes.func.isRequired,
-  disabledInfo: PropTypes.object.isRequired
+  disabledInfo: PropTypes.object.isRequired,
+  price: PropTypes.number.isRequired,
+  purchasable: PropTypes.bool.isRequired
 }
 
 export default BuildControls

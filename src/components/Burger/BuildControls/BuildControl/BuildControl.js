@@ -1,21 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './BuildControl.module.css';
+import classes from './BuildControl.module.css';
 
 function BuildControl(props) {
   return (
-    <div className={styles.BuildControl}>
+    <div className={classes.BuildControl}>
       <button
-        className={styles.Less}
+        className={classes.Less}
         onClick={props.ingRemoved}
         disabled={props.disabled}>
           Less
       </button>
-      <div className={styles.Label}>
+      <div className={classes.Label}>
         {props.label}
       </div>
       <button
-        className={styles.More}
+        className={classes.More}
         onClick={props.ingAdded}>
           More
       </button>
