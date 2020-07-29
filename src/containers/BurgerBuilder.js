@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import Burger from '../components/Burger/Burger';
 import BuildControls from '../components/Burger/BuildControls/BuildControls';
 import Modal from '../components/UI/Modal/Modal';
@@ -76,10 +75,10 @@ export default class BurgerBuilder extends Component {
     this.setState({purchasable: sum > 0});
   }
 
-  purchaseHandler () {
-    this.setState({purchasing: true})
+  purchaseToggleHandler = (bool) => {
+    this.setState({purchasing: bool})
   }
-
+  
   render() {
     const disabledInfo = {
       ...this.state.ingredients
@@ -90,7 +89,7 @@ export default class BurgerBuilder extends Component {
 
     return (
       <React.Fragment>
-        <Modal ingredients={this.state.ingredients}>
+        <Modal show={this.state.purchasing} modalClosed={() => this.purchaseToggleHandler(false)}> 
           <OrderSummary ingredients={this.state.ingredients}/>
         </Modal>
         <Burger ingredients={this.state.ingredients}/>
@@ -100,13 +99,10 @@ export default class BurgerBuilder extends Component {
           disabledInfo={disabledInfo}
           purchasable={this.state.purchasable}
           price={this.state.totalPrice}
-          ordered={this.purchaseHandler}
+          ordered={() => this.purchaseToggleHandler(true)}
           />
       </React.Fragment>
     )
   }
 }
 
-BurgerBuilder.propTypes = {
-
-}

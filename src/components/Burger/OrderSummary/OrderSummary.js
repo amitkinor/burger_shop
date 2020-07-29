@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Button from '../../UI/Button/Button.js'
 
 function OrderSummary(props) {
   
@@ -22,6 +23,8 @@ function OrderSummary(props) {
         {ingredientSummary}
       </ul>
       <p>Continue to checkout</p>
+      <Button>yoyo</Button>
+      <button>Continue</button>
     </React.Fragment>
   )
 }
