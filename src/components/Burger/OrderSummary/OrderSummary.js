@@ -22,16 +22,28 @@ function OrderSummary(props) {
       <ul>
         {ingredientSummary}
       </ul>
+      <p><strong>Total Price: {props.price.toFixed(2)}</strong></p>
       <p>Continue to checkout</p>
-      <Button>yoyo</Button>
-      <button>Continue</button>
+      <Button
+        clicked={props.purchaseCancelled}
+        btnType="Danger">
+          Cancel
+      </Button>
+      <Button
+        clicked={props.PurchaseContinue}
+        btnType="Success">
+          Checkout
+      </Button>
     </React.Fragment>
   )
 }
 
 OrderSummary.propTypes = {
-
+  purchaseCancelled: PropTypes.func.isRequired,
+  PurchaseContinue: PropTypes.func.isRequired,
+  price: PropTypes.number.isRequired
 }
 
 export default OrderSummary
+
 

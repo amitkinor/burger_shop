@@ -78,6 +78,10 @@ export default class BurgerBuilder extends Component {
   purchaseToggleHandler = (bool) => {
     this.setState({purchasing: bool})
   }
+
+  PurchaseContinueHandler = () => {
+    alert('Continue Pressed')
+  }
   
   render() {
     const disabledInfo = {
@@ -90,7 +94,12 @@ export default class BurgerBuilder extends Component {
     return (
       <React.Fragment>
         <Modal show={this.state.purchasing} modalClosed={() => this.purchaseToggleHandler(false)}> 
-          <OrderSummary ingredients={this.state.ingredients}/>
+          <OrderSummary
+            ingredients={this.state.ingredients}
+            purchaseCancelled={() => this.purchaseToggleHandler(false)}
+            PurchaseContinue={this.PurchaseContinueHandler}
+            price={this.state.totalPrice}
+            />
         </Modal>
         <Burger ingredients={this.state.ingredients}/>
         <BuildControls
