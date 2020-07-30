@@ -1,49 +1,54 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Button from '../../UI/Button/Button.js'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import Button from '../../UI/Button/Button';
 
-function OrderSummary(props) {
-  
-  const ingredientSummary = Object.keys(props.ingredients)
-    .map( (ing) => {
+class OrderSummary extends Component {
+  constructor(props){
+    super(props);
+    this.props = props;
+  }
+
+  render() {
+    const {
+      price,
+      purchaseCancelled,
+      PurchaseContinue,
+      ingredients,
+    } = this.props;
+
+    const ingredientSummary = Object.keys(ingredients).map((ing) => {
+      return (
+        <li key={ing}>
+          <span style={{ textTransform: 'capitalize' }}>{ing}</span>:
+          {ingredients[ing]}
+        </li>
+      );
+    });
+
     return (
-    <li key={ing}> 
-      <span style={{textTransform:'capitalize'}}>{ing}
-      </span>
-        :
-        {props.ingredients[ing]}
-    </li>)
-    })
-
-  return (
-    <React.Fragment>
-      <h3>Your Order</h3>
-      <p>1 burger with:</p>
-      <ul>
-        {ingredientSummary}
-      </ul>
-      <p><strong>Total Price: {props.price.toFixed(2)}</strong></p>
-      <p>Continue to checkout</p>
-      <Button
-        clicked={props.purchaseCancelled}
-        btnType="Danger">
+      <>
+        <h3>Your Order</h3>
+        <p>1 burger with:</p>
+        <ul>{ingredientSummary}</ul>
+        <p>
+          <strong>Total Price: {price.toFixed(2)}</strong>
+        </p>
+        <p>Continue to checkout</p>
+        <Button clicked={purchaseCancelled} btnType="Danger">
           Cancel
-      </Button>
-      <Button
-        clicked={props.PurchaseContinue}
-        btnType="Success">
+        </Button>
+        <Button clicked={PurchaseContinue} btnType="Success">
           Checkout
-      </Button>
-    </React.Fragment>
-  )
+        </Button>
+      </>
+    );
+  }
 }
 
 OrderSummary.propTypes = {
   purchaseCancelled: PropTypes.func.isRequired,
   PurchaseContinue: PropTypes.func.isRequired,
-  price: PropTypes.number.isRequired
-}
+  price: PropTypes.number.isRequired,
+};
 
-export default OrderSummary
-
-
+export default OrderSummary;

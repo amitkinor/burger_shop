@@ -1,27 +1,29 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import classes from './Modal.module.css'
-import Backdrop from '../Backdrop/Backdrop'
+import React, { Component } from 'react';
+import classes from './Modal.module.css';
+import Backdrop from '../Backdrop/Backdrop';
 
-function Modal(props) {
-  return (
-    <React.Fragment>
-      <Backdrop show={props.show} clicked={props.modalClosed}/>
-      <div 
-        className={classes.Modal}
-        style={{
-          transform: props.show ? 'translateY(0)' : 'translateY(-100vh)',
-          opacity: props.show ? '1' : '0'
-        }}>
-          {props.children}
-      </div>
-    </React.Fragment>
-  )
+// eslint-disable-next-line react/prefer-stateless-function
+export default class Modal extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    const { show } = this.props;
+    return nextProps.show !== show;
+  }
+
+  render() {
+    const { show, modalClosed, children } = this.props;
+    return (
+      <>
+        <Backdrop show={show} clicked={modalClosed} />
+        <div
+          className={classes.Modal}
+          style={{
+            transform: show ? 'translateY(0)' : 'translateY(-100vh)',
+            opacity: show ? '1' : '0',
+          }}
+        >
+          {children}
+        </div>
+      </>
+    );
+  }
 }
-
-Modal.propTypes = {
-  show: PropTypes.bool.isRequired
-}
-
-export default Modal
-

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import Burger from '../components/Burger/Burger';
 import BuildControls from '../components/Burger/BuildControls/BuildControls';
 import Modal from '../components/UI/Modal/Modal';
@@ -8,25 +8,24 @@ const INGREDIENT_PRICES = {
   salad: 0.5,
   cheese: 0.4,
   meat: 1.3,
-  bacon: 0.7
-}
+  bacon: 0.7,
+};
 
 export default class BurgerBuilder extends Component {
-  
   state = {
     ingredients: {
       salad: 0,
       bacon: 0,
       cheese: 0,
-      meat: 0
+      meat: 0,
     },
     totalPrice: 4,
     purchasable: false,
-    purchasing: false
-  }
+    purchasing: false,
+  };
 
   addIngredientHandler = (type) => {
-    const updatedIngredients = {...this.state.ingredients}
+    const updatedIngredients = { ...this.state.ingredients };
 
     const oldCount = this.state.ingredients[type];
     const updatedCount = oldCount + 1;
@@ -37,18 +36,19 @@ export default class BurgerBuilder extends Component {
     const newPrice = oldPrice + priceAddition;
 
     this.setState({
-      ingredients:  updatedIngredients,
-      totalPrice: newPrice
+      ingredients: updatedIngredients,
+      totalPrice: newPrice,
     });
     this.updatePurchaseState(updatedIngredients);
-    
-  }
+  };
 
   removeIngredientHandler = (type) => {
-    const updatedIngredients = {...this.state.ingredients}
-    
+    const updatedIngredients = { ...this.state.ingredients };
+
     const oldCount = this.state.ingredients[type];
-    if (oldCount <= 0){return} ;
+    if (oldCount <= 0) {
+      return;
+    }
     const updatedCount = oldCount - 1;
     updatedIngredients[type] = updatedCount;
 
@@ -57,61 +57,63 @@ export default class BurgerBuilder extends Component {
     const newPrice = oldPrice - priceSubtraction;
 
     this.setState({
-      ingredients:  updatedIngredients,
-      totalPrice: newPrice
+      ingredients: updatedIngredients,
+      totalPrice: newPrice,
     });
 
     this.updatePurchaseState(updatedIngredients);
-  }
+  };
 
   updatePurchaseState = (ingredients) => {
     const sum = Object.keys(ingredients)
-        .map(ing => {
-          return ingredients[ing]
-        })
-        .reduce((sum, el) => {
-          return sum + el;
-        },0);
-    this.setState({purchasable: sum > 0});
-  }
+      .map((ing) => {
+        return ingredients[ing];
+      })
+      .reduce((sum, el) => {
+        return sum + el;
+      }, 0);
+    this.setState({ purchasable: sum > 0 });
+  };
 
   purchaseToggleHandler = (bool) => {
-    this.setState({purchasing: bool})
-  }
+    this.setState({ purchasing: bool });
+  };
 
   PurchaseContinueHandler = () => {
-    alert('Continue Pressed')
-  }
-  
+    alert('Continue Pressed');
+  };
+
   render() {
     const disabledInfo = {
-      ...this.state.ingredients
+      ...this.state.ingredients,
     };
-    for (let key in disabledInfo) {
-      disabledInfo[key] = disabledInfo[key] <= 0
+    for (const key in disabledInfo) {
+      disabledInfo[key] = disabledInfo[key] <= 0;
     }
 
     return (
-      <React.Fragment>
-        <Modal show={this.state.purchasing} modalClosed={() => this.purchaseToggleHandler(false)}> 
+      <>
+        <Modal
+          show={this.state.purchasing}
+          modalClosed={() => this.purchaseToggleHandler(false)}
+        >
           <OrderSummary
             ingredients={this.state.ingredients}
             purchaseCancelled={() => this.purchaseToggleHandler(false)}
             PurchaseContinue={this.PurchaseContinueHandler}
             price={this.state.totalPrice}
-            />
+          />
         </Modal>
-        <Burger ingredients={this.state.ingredients}/>
+        <Burger ingredients={this.state.ingredients} />
         <BuildControls
-          ingredientAdded={this.addIngredientHandler} 
+          ingredientAdded={this.addIngredientHandler}
           ingredientRemoved={this.removeIngredientHandler}
           disabledInfo={disabledInfo}
           purchasable={this.state.purchasable}
           price={this.state.totalPrice}
           ordered={() => this.purchaseToggleHandler(true)}
-          />
-      </React.Fragment>
-    )
+        />
+      </>
+    );
   }
 }
-
