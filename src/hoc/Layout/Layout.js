@@ -20,12 +20,13 @@ class Layout extends Component {
 
   render() {
     const { children } = this.props;
-    //const { showSideDrawer } = this.state;
+    const { showSideDrawer } = this.state;
+
     return (
       <>
         <Toolbar drawerToggleClicked={this.sideDrawerToggleHandler} />
         <SideDrawer
-          open={this.state.showSideDrawer}
+          open={showSideDrawer}
           closed={this.sideDrawerClosedHandler}
         />
         <main className={classes.Content}>{children}</main>
