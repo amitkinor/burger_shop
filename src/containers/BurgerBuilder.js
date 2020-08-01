@@ -1,3 +1,6 @@
+/* eslint-disable react/state-in-constructor */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
 import React, { Component } from 'react';
 import Burger from '../components/Burger/Burger';
 import BuildControls from '../components/Burger/BuildControls/BuildControls';
@@ -25,14 +28,16 @@ export default class BurgerBuilder extends Component {
   };
 
   addIngredientHandler = (type) => {
-    const updatedIngredients = { ...this.state.ingredients };
+    const { ingredients, totalPrice } = this.state;
 
-    const oldCount = this.state.ingredients[type];
+    const updatedIngredients = { ...ingredients };
+
+    const oldCount = ingredients[type];
     const updatedCount = oldCount + 1;
     updatedIngredients[type] = updatedCount;
 
     const priceAddition = INGREDIENT_PRICES[type];
-    const oldPrice = this.state.totalPrice;
+    const oldPrice = totalPrice;
     const newPrice = oldPrice + priceAddition;
 
     this.setState({
@@ -43,9 +48,11 @@ export default class BurgerBuilder extends Component {
   };
 
   removeIngredientHandler = (type) => {
-    const updatedIngredients = { ...this.state.ingredients };
+    const { ingredients, totalPrice } = this.state;
 
-    const oldCount = this.state.ingredients[type];
+    const updatedIngredients = { ...ingredients };
+
+    const oldCount = ingredients[type];
     if (oldCount <= 0) {
       return;
     }
@@ -53,7 +60,7 @@ export default class BurgerBuilder extends Component {
     updatedIngredients[type] = updatedCount;
 
     const priceSubtraction = INGREDIENT_PRICES[type];
-    const oldPrice = this.state.totalPrice;
+    const oldPrice = totalPrice;
     const newPrice = oldPrice - priceSubtraction;
 
     this.setState({
@@ -69,8 +76,8 @@ export default class BurgerBuilder extends Component {
       .map((ing) => {
         return ingredients[ing];
       })
-      .reduce((sum, el) => {
-        return sum + el;
+      .reduce((totalSum, el) => {
+        return totalSum + el;
       }, 0);
     this.setState({ purchasable: sum > 0 });
   };
@@ -80,12 +87,15 @@ export default class BurgerBuilder extends Component {
   };
 
   PurchaseContinueHandler = () => {
+    // eslint-disable-next-line no-alert
     alert('Continue Pressed');
   };
 
   render() {
+    const { ingredients, purchasing, totalPrice, purchasable } = this.state;
+
     const disabledInfo = {
-      ...this.state.ingredients,
+      ...ingredients,
     };
     for (const key in disabledInfo) {
       disabledInfo[key] = disabledInfo[key] <= 0;
@@ -94,23 +104,23 @@ export default class BurgerBuilder extends Component {
     return (
       <>
         <Modal
-          show={this.state.purchasing}
+          show={purchasing}
           modalClosed={() => this.purchaseToggleHandler(false)}
         >
           <OrderSummary
-            ingredients={this.state.ingredients}
+            ingredients={ingredients}
             purchaseCancelled={() => this.purchaseToggleHandler(false)}
             PurchaseContinue={this.PurchaseContinueHandler}
-            price={this.state.totalPrice}
+            price={totalPrice}
           />
         </Modal>
-        <Burger ingredients={this.state.ingredients} />
+        <Burger ingredients={ingredients} />
         <BuildControls
           ingredientAdded={this.addIngredientHandler}
           ingredientRemoved={this.removeIngredientHandler}
           disabledInfo={disabledInfo}
-          purchasable={this.state.purchasable}
-          price={this.state.totalPrice}
+          purchasable={purchasable}
+          price={totalPrice}
           ordered={() => this.purchaseToggleHandler(true)}
         />
       </>
