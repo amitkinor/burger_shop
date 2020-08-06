@@ -39,7 +39,7 @@ function Order(props) {
 }
 
 Order.propTypes = {
-  ingredients: PropTypes.object.isRequired,
+  ingredients: PropTypes.array.isRequired,
   price: PropTypes.number.isRequired,
 };
 
