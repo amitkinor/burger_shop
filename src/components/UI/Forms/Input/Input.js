@@ -4,15 +4,29 @@ import PropTypes from 'prop-types';
 import classes from './Input.module.css';
 
 function Input(props) {
-  const { value, label, elementType, elementConfig, inputChangedHandler} = props;
+  const {
+    value,
+    label,
+    elementType,
+    elementConfig,
+    inputChangedHandler,
+    shouldValidate,
+    valid,
+    touched,
+  } = props;
 
   let inputElement = null;
+  const inputClasses = [classes.InputElement];
+
+  if (!valid && shouldValidate && touched) {
+    inputClasses.push(classes.Invalid);
+  }
 
   switch (elementType) {
     case 'input':
       inputElement = (
         <input
-          className={classes.Input}
+          className={inputClasses.join(' ')}
           {...elementConfig}
           value={value}
           onChange={inputChangedHandler}
@@ -22,7 +36,7 @@ function Input(props) {
     case 'textarea':
       inputElement = (
         <textarea
-          className={classes.Input}
+          className={inputClasses.join(' ')}
           {...elementConfig}
           value={value}
           onChange={inputChangedHandler}
@@ -32,7 +46,7 @@ function Input(props) {
     case 'select':
       inputElement = (
         <select
-          className={classes.Input}
+          className={inputClasses.join(' ')}
           value={value}
           onChange={inputChangedHandler}
         >
@@ -47,7 +61,7 @@ function Input(props) {
     default:
       inputElement = (
         <input
-          className={classes.Input}
+          className={inputClasses.join(' ')}
           {...elementConfig}
           value={value}
           onChange={inputChangedHandler}
@@ -68,6 +82,7 @@ Input.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   inputChangedHandler: PropTypes.func.isRequired,
+  valid: PropTypes.bool.isRequired,
 };
 
 export default Input;
